@@ -31,7 +31,7 @@ export const archiveCall = async (callInfo) => {
 };
 
 export const archiveAllCalls = async (allCalls) => {
-	const calls = await allCalls.map((call) => {
+	const calls = await allCalls.forEach((call) => {
 		fetch(`${BACKENDURL}/activities/${call.id}`, {
 			method: 'PATCH',
 			headers: {
