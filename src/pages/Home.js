@@ -2,7 +2,7 @@ import React from 'react';
 import { Container } from '@chakra-ui/react';
 import Navbar from '../components/Navbar';
 import Activity from '../components/Activity';
-
+import AlertDisplay from '../components/AlertDisplay';
 const Home = () => {
 	return (
 		<Container
@@ -10,8 +10,8 @@ const Home = () => {
 			borderTopLeftRadius={10}
 			borderBottomRightRadius={10}
 			borderBottomLeftRadius={10}
-			w={['90%', '30%', '30%', '30%']}
-			h={['90%', '', '', '100vh']}
+			w={['90%', '100%', '100%', '100%', '30%']}
+			h={['90%', '90%', '90%', '90%', '100vh']}
 			boxShadow={'rgba(0, 0, 0, 0.24) 0px 3px 8px;'}
 			overflow={'auto'}
 			my='5'
@@ -19,6 +19,7 @@ const Home = () => {
 		>
 			<Navbar />
 			<Activity />
+			<AlertDisplay />
 		</Container>
 	);
 };
