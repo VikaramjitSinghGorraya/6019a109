@@ -30,7 +30,7 @@ const Call = ({ displayCallDetails, setDisplayCallDetails }) => {
 				}
 			>
 				<ModalOverlay />
-				<ModalContent w='30%'>
+				<ModalContent w={['100%', '100%', '100%', '30%', '30%']} my='auto'>
 					<ModalHeader>Call Details</ModalHeader>
 					<ModalCloseButton />
 					<ModalBody>
