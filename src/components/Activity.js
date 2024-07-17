@@ -46,7 +46,7 @@ const Activity = () => {
 
 		//Reftecth The Calls if status change was success
 		if (makeArchive.isSuccess) {
-			queryClient.refetchQueries({
+			queryClient.invalidateQueries({
 				queryKey: 'allCalls',
 			});
 		}
@@ -67,125 +67,137 @@ const Activity = () => {
 
 					<TabPanels h='100%'>
 						<TabPanel h='100%' pb='10' overflow={'auto'}>
-							{callsData
-								?.filter((call) => !call.is_archived)
-								.map((call, index) => (
-									<Box key={index}>
-										<HStack justifyContent={'space-between'}>
-											<HStack>
-												<Image
-													src={
-														call.direction === 'inbound' &&
-														call.call_type === 'answered'
-															? InboundAccepted
-															: call.direction === 'inbound' &&
-															  call.call_type === 'missed'
-															? InboundRejected
-															: call.direction === 'outbound' &&
-															  call.call_type === 'answered'
-															? OutboundAccepted
-															: call.direction === 'outbound' &&
-															  call.call_type === 'missed'
-															? OutboundRejected
-															: ''
+							{callsData?.filter((call) => !call.is_archived).length === 0 ? (
+								<Text textAlign={'center'} as='p' fontWeight={'400'}>
+									All Calls Archived
+								</Text>
+							) : (
+								callsData
+									?.filter((call) => !call.is_archived)
+									.map((call, index) => (
+										<Box key={index}>
+											<HStack justifyContent={'space-between'}>
+												<HStack>
+													<Image
+														src={
+															call.direction === 'inbound' &&
+															call.call_type === 'answered'
+																? InboundAccepted
+																: call.direction === 'inbound' &&
+																  call.call_type === 'missed'
+																? InboundRejected
+																: call.direction === 'outbound' &&
+																  call.call_type === 'answered'
+																? OutboundAccepted
+																: call.direction === 'outbound' &&
+																  call.call_type === 'missed'
+																? OutboundRejected
+																: ''
+														}
+														h='5'
+														w='5'
+													/>
+													<Text as='small' fontWeight={'500'}>
+														{call.from}
+													</Text>
+												</HStack>
+												<Button
+													bg='transparent'
+													onClick={(e) =>
+														setDisplayCallDetails({
+															displayDetails: true,
+															direction: call.direction,
+															duration: call.duration,
+															cameFrom: call.from,
+															madeTo: call.to,
+															status: call.call_type,
+														})
 													}
-													h='5'
-													w='5'
-												/>
-												<Text as='small' fontWeight={'500'}>
-													{call.from}
-												</Text>
+												>
+													<Tooltip label='Call Information'>
+														<Image h='5' w='5' mr='1' src={Info} />
+													</Tooltip>
+												</Button>
+												<Button
+													bg='transparent'
+													onClick={() => archiveHandler(call)}
+												>
+													<Tooltip label='Archive Call'>
+														<Image h='5' w='5' mr='1' src={Archive} />
+													</Tooltip>
+												</Button>
 											</HStack>
-											<Button
-												bg='transparent'
-												onClick={(e) =>
-													setDisplayCallDetails({
-														displayDetails: true,
-														direction: call.direction,
-														duration: call.duration,
-														cameFrom: call.from,
-														madeTo: call.to,
-														status: call.call_type,
-													})
-												}
-											>
-												<Tooltip label='Call Information'>
-													<Image h='5' w='5' mr='1' src={Info} />
-												</Tooltip>
-											</Button>
-											<Button
-												bg='transparent'
-												onClick={() => archiveHandler(call)}
-											>
-												<Tooltip label='Archive Call'>
-													<Image h='5' w='5' mr='1' src={Archive} />
-												</Tooltip>
-											</Button>
-										</HStack>
-										<Divider my='1' border={'7px solid gray.900'} />
-									</Box>
-								))}
+											<Divider my='1' border={'7px solid gray.900'} />
+										</Box>
+									))
+							)}
 						</TabPanel>
 						<TabPanel h='100%' pb='10' overflow={'auto'}>
-							{callsData
-								?.filter((call) => call.is_archived)
-								.map((call, index) => (
-									<Box Box key={index}>
-										<HStack justifyContent={'space-between'}>
-											<HStack>
-												{/*Display Call Icons based on if it was inbound, outbound, answered or missed*/}
-												<Image
-													src={
-														call.direction === 'inbound' &&
-														call.call_type === 'answered'
-															? InboundAccepted
-															: call.direction === 'inbound' &&
-															  call.call_type === 'missed'
-															? InboundRejected
-															: call.direction === 'outbound' &&
-															  call.call_type === 'answered'
-															? OutboundAccepted
-															: call.direction === 'outbound' &&
-															  call.call_type === 'missed'
-															? OutboundRejected
-															: ''
+							{callsData?.filter((call) => call.is_archived).length === 0 ? (
+								<Text textAlign={'center'} as='p' fontWeight={'400'}>
+									No Archived Calls
+								</Text>
+							) : (
+								callsData
+									?.filter((call) => call.is_archived)
+									.map((call, index) => (
+										<Box Box key={index}>
+											<HStack justifyContent={'space-between'}>
+												<HStack>
+													{/*Display Call Icons based on if it was inbound, outbound, answered or missed*/}
+													<Image
+														src={
+															call.direction === 'inbound' &&
+															call.call_type === 'answered'
+																? InboundAccepted
+																: call.direction === 'inbound' &&
+																  call.call_type === 'missed'
+																? InboundRejected
+																: call.direction === 'outbound' &&
+																  call.call_type === 'answered'
+																? OutboundAccepted
+																: call.direction === 'outbound' &&
+																  call.call_type === 'missed'
+																? OutboundRejected
+																: ''
+														}
+														h='5'
+														w='5'
+													/>
+													<Text as='small' fontWeight={'500'}>
+														{call.from}
+													</Text>
+												</HStack>
+												<Button
+													bg='transparent'
+													onClick={(e) =>
+														setDisplayCallDetails({
+															displayDetails: true,
+															direction: call.direction,
+															duration: call.duration,
+															cameFrom: call.from,
+															madeTo: call.to,
+															status: call.call_type,
+														})
 													}
-													h='5'
-													w='5'
-												/>
-												<Text as='small' fontWeight={'500'}>
-													{call.from}
-												</Text>
+												>
+													<Tooltip label='Call Information'>
+														<Image h='5' w='5' mr='1' src={Info} />
+													</Tooltip>
+												</Button>
+												<Button
+													bg='transparent'
+													onClick={() => archiveHandler(call)}
+												>
+													<Tooltip label='Unarchive Call'>
+														<Image h='5' w='5' mr='1' src={Archive} />
+													</Tooltip>
+												</Button>
 											</HStack>
-											<Button
-												bg='transparent'
-												onClick={(e) =>
-													setDisplayCallDetails({
-														displayDetails: true,
-														direction: call.direction,
-														duration: call.duration,
-														cameFrom: call.from,
-														madeTo: call.to,
-														status: call.call_type,
-													})
-												}
-											>
-												<Tooltip label='Call Information'>
-													<Image h='5' w='5' mr='1' src={Info} />
-												</Tooltip>
-											</Button>
-											<Button
-												bg='transparent'
-												onClick={() => archiveHandler(call)}
-											>
-												<Tooltip label='Unarchive Call'>
-													<Image h='5' w='5' mr='1' src={Archive} />
-												</Tooltip>
-											</Button>
-										</HStack>
-										<Divider my='1' border={'7px solid gray.900'} />
-									</Box>
-								))}
+											<Divider my='1' border={'7px solid gray.900'} />
+										</Box>
+									))
+							)}
 						</TabPanel>
 					</TabPanels>
 				</Tabs>

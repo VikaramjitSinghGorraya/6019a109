@@ -26,7 +26,7 @@ const Navbar = () => {
 		unArchiveCall.mutate();
 
 		if (unArchiveCall.isSuccess) {
-			queryClient.refetchQueries({
+			queryClient.invalidateQueries({
 				queryKey: 'allCalls',
 			});
 		}
@@ -37,7 +37,7 @@ const Navbar = () => {
 		archiveAllCalls.mutate(callsData);
 
 		if (unArchiveCall.isSuccess) {
-			queryClient.refetchQueries({
+			queryClient.invalidateQueries({
 				queryKey: 'allCalls',
 			});
 		}
