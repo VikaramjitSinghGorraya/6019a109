@@ -14,8 +14,8 @@ const Home = () => {
 			h={['90%', '', '', '100vh']}
 			boxShadow={'rgba(0, 0, 0, 0.24) 0px 3px 8px;'}
 			overflow={'auto'}
-			mb='5'
-			pb='5'
+			my='5'
+			py='5'
 		>
 			<Navbar />
 			<Activity />
