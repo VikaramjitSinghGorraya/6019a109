@@ -55,7 +55,7 @@ const Activity = () => {
 	return (
 		<HStack h='100%'>
 			<VStack p='1' h='100%' w='100%' alignItems={'flex-start'}>
-				<Tabs mx='auto' w='100%' overflow={'hidden'}>
+				<Tabs mx='auto' w='100%' overflow={'hidden'} className='scroll'>
 					<TabList>
 						<Tab w='50%' bgColor={'#96c5c4'}>
 							All Calls
