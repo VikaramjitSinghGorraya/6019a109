@@ -19,7 +19,7 @@ export const useGetCalls = () => {
 
 //--------------------------ARCHIVE QUERIES------------------------------------
 export const archiveCall = async (callInfo) => {
-	const calls = await fetch(`${BACKENDURL}/activities/` + callInfo.id, {
+	const calls = await fetch(`${BACKENDURL}/activities/${callInfo.id}`, {
 		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ export const archiveCall = async (callInfo) => {
 
 export const archiveAllCalls = async (allCalls) => {
 	const calls = await allCalls.map((call) => {
-		fetch(`${BACKENDURL}/activities/` + call.id, {
+		fetch(`${BACKENDURL}/activities/${call.id}`, {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
